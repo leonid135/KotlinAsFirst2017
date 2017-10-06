@@ -75,12 +75,15 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    if ((kingX == rookX1 || kingX == rookX2) && (kingY == rookY1 || kingY == rookY2)) return 3 else
-        if ((kingX == rookX2 || kingY == rookY2) && (kingX != rookX1 && kingY != rookY1)) return 2 else
-            if ((kingX == rookX1 || kingY == rookY1) && (kingX != rookX2 && kingY != rookY2)) return 1 else
+    val kxrx1 = kingX == rookX1
+    val kxrx2 = kingX == rookX2
+    val kyry1 = kingY == rookY1
+    val kyry2 = kingY == rookY2
+
+    if ((kxrx1 || kxrx2) && (kyry1 || kyry2)) return 3 else
+        if ((kxrx2 || kyry2) && (kingX != rookX1 && kingY != rookY1)) return 2 else
+            if ((kxrx1 || kyry1) && (kingX != rookX2 && kingY != rookY2)) return 1 else
                 return 0
-
-
 }
 
 /**
@@ -96,11 +99,15 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    if ((kingX == rookX || kingY == rookY) && (Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY))) return 3 else
-        if (((Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)) && (kingX != rookX && kingY != rookY))) return 2 else
-            if ((kingX == rookX || kingY == rookY) && ((Math.abs(kingX - bishopX) != Math.abs(kingY - bishopY)))) return 1 else
+    val krx = kingX == rookX
+    val kry = kingY == rookY
+    val axybs = Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)
+    if ((krx || kry) && (axybs)) return 3 else
+        if ((axybs && (kingX != rookX && kingY != rookY))) return 2 else
+            if ((krx || kry) && ((Math.abs(kingX - bishopX) != Math.abs(kingY - bishopY)))) return 1 else
                 return 0
 }
+
 
 /**
  * Простая
@@ -115,8 +122,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         if ((sqr(c) == sqr(a) + sqr(b)) || sqr(a) == sqr(c) + sqr(b) || sqr(b) == sqr(c) + sqr(a)) return 1 else
             if (sqr(c) > sqr(a) + sqr(b) || sqr(a) > sqr(c) + sqr(b) || sqr(b) > sqr(c) + sqr(a)) return 2 else
                 return 0
-
 }
+
 
 /**
  * Средняя
@@ -133,4 +140,5 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
                 if (a >= c && b <= d) return b - a else
 
                     return -1
+
 }

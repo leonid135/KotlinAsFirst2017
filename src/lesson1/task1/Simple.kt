@@ -70,7 +70,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = ((sagene
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
 fun angleInRadian(grad: Int, min: Int, sec: Int): Double =
-        PI/180 * (grad  + min.toDouble() / 60  + sec.toDouble() / 3600 )
+        PI / 180 * (grad + min.toDouble() / 60 + sec.toDouble() / 3600)
 
 
 /**
@@ -97,7 +97,8 @@ fun thirdDigit(number: Int): Int = number % 1000 / 100
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = (hoursArrive * 60 + minutesArrive) - (hoursDepart * 60 + minutesDepart)
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =
+        (hoursArrive * 60 + minutesArrive) - (hoursDepart * 60 + minutesDepart)
 
 /**
  * Простая
@@ -106,7 +107,8 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double = (initial * (sqr(percent / 100.00 + 1.00) * (percent / 100.00 + 1.00)))
+fun accountInThreeYears(initial: Int, percent: Int): Double =
+        (initial * (sqr(percent / 100.00 + 1.00) * (percent / 100.00 + 1.00)))
 
 /**
  * Простая
