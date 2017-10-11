@@ -37,10 +37,10 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if ((age == 111 || age == 11) || age % 100 in 5..20) return "$age лет" else
-        if (age % 10 in 2..4) return "$age года" else
-            if (age % 10 == 1) return "$age год" else
-                return "$age лет"
+    return if ((age == 111 || age == 11) || age % 100 in 5..20) "$age лет"
+    else if (age % 10 in 2..4) "$age года"
+    else if (age % 10 == 1) "$age год"
+    else "$age лет"
 }
 
 /**
@@ -56,9 +56,11 @@ fun timeForHalfWay(t1: Double, v1: Double,
     val s0 = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     val s1 = t1 * v1
     val s2 = t2 * v2
-    if (s0 < s1) return s0 / v1 else
-        if (s0 in s1..(s1 + s2)) return t1 + (s0 - s1) / v2 else
-            return t1 + t2 + (s0 - s1 - s2) / v3
+    return when {
+        s0 < s1 -> s0 / v1
+        s0 in s1..(s1 + s2) -> t1 + (s0 - s1) / v2
+        else -> t1 + t2 + (s0 - s1 - s2) / v3
+    }
 
 }
 
@@ -75,15 +77,18 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    val kxrx1 = kingX == rookX1
-    val kxrx2 = kingX == rookX2
-    val kyry1 = kingY == rookY1
-    val kyry2 = kingY == rookY2
+    val EqualityKxRx1 = kingX == rookX1
+    val EqualityKxRx2 = kingX == rookX2
+    val EqualityKyRy1 = kingY == rookY1
+    val EqualityKyRy2 = kingY == rookY2
 
-    if ((kxrx1 || kxrx2) && (kyry1 || kyry2)) return 3 else
-        if ((kxrx2 || kyry2) && (kingX != rookX1 && kingY != rookY1)) return 2 else
-            if ((kxrx1 || kyry1) && (kingX != rookX2 && kingY != rookY2)) return 1 else
-                return 0
+    return if ((EqualityKxRx1 || EqualityKxRx2) &&
+            (EqualityKyRy1 || EqualityKyRy2)) 3
+    else if ((EqualityKxRx2 || EqualityKyRy2) &&
+            (kingX != rookX1 && kingY != rookY1)) 2
+    else if ((EqualityKxRx1 || EqualityKyRy1) &&
+            (kingX != rookX2 && kingY != rookY2)) 1
+    else 0
 }
 
 /**
@@ -99,13 +104,16 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val krx = kingX == rookX
-    val kry = kingY == rookY
-    val axybs = Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)
-    if ((krx || kry) && (axybs)) return 3 else
-        if ((axybs && (kingX != rookX && kingY != rookY))) return 2 else
-            if ((krx || kry) && ((Math.abs(kingX - bishopX) != Math.abs(kingY - bishopY)))) return 1 else
-                return 0
+    val EqualityKxRx = kingX == rookX
+    val EqualityKxRy = kingY == rookY
+    val EqualityModuliResideKxBxKyBy = Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)
+    return if ((EqualityKxRx || EqualityKxRy) &&
+            (EqualityModuliResideKxBxKyBy)) 3
+    else if ((EqualityModuliResideKxBxKyBy &&
+            (kingX != rookX && kingY != rookY))) 2
+    else if ((EqualityKxRx || EqualityKxRy) &&
+            ((Math.abs(kingX - bishopX) != Math.abs(kingY - bishopY)))) 1
+    else 0
 }
 
 
@@ -118,10 +126,13 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    if (a + b < c || a + c < b || c + b < a) return -1 else
-        if ((sqr(c) == sqr(a) + sqr(b)) || sqr(a) == sqr(c) + sqr(b) || sqr(b) == sqr(c) + sqr(a)) return 1 else
-            if (sqr(c) > sqr(a) + sqr(b) || sqr(a) > sqr(c) + sqr(b) || sqr(b) > sqr(c) + sqr(a)) return 2 else
-                return 0
+    val SumSqrAB = sqr(a) + sqr(b)
+    val SumSqrBC = sqr(c) + sqr(b)
+    val SumSqrAC = sqr(c) + sqr(a)
+    return if (a + b < c || a + c < b || c + b < a) -1
+    else if ((sqr(c) == SumSqrAB) || sqr(a) == SumSqrBC || sqr(b) == SumSqrAC) 1
+    else if (sqr(c) > SumSqrAB || sqr(a) > SumSqrBC || sqr(b) > SumSqrAC) 2
+    else 0
 }
 
 
@@ -134,11 +145,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if (b >= c && a <= c && b <= d) return b - c else
-        if (a <= c && b >= d) return d - c else
-            if (a <= d && c <= a && b >= d) return d - a else
-                if (a >= c && b <= d) return b - a else
-
-                    return -1
+    return if (c in a..b && b <= d) b - c
+    else if (a <= c && b >= d) d - c
+    else if (a in c..d && b >= d) d - a
+    else if (a >= c && b <= d) b - a
+    else -1
 
 }
