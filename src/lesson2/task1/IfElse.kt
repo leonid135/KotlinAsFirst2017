@@ -77,16 +77,16 @@ fun timeForHalfWay(t1: Double, v1: Double,
 fun whichRookThreatens(kingX: Int, kingY: Int,
                        rookX1: Int, rookY1: Int,
                        rookX2: Int, rookY2: Int): Int {
-    val EqualityKxRx1 = kingX == rookX1
-    val EqualityKxRx2 = kingX == rookX2
-    val EqualityKyRy1 = kingY == rookY1
-    val EqualityKyRy2 = kingY == rookY2
+    val equalityKxRx1 = kingX == rookX1
+    val equalityKxRx2 = kingX == rookX2
+    val equalityKyRy1 = kingY == rookY1
+    val equalityKyRy2 = kingY == rookY2
 
-    return if ((EqualityKxRx1 || EqualityKxRx2) &&
-            (EqualityKyRy1 || EqualityKyRy2)) 3
-    else if ((EqualityKxRx2 || EqualityKyRy2) &&
+    return if ((equalityKxRx1 || equalityKxRx2) &&
+            (equalityKyRy1 || equalityKyRy2)) 3
+    else if ((equalityKxRx2 || equalityKyRy2) &&
             (kingX != rookX1 && kingY != rookY1)) 2
-    else if ((EqualityKxRx1 || EqualityKyRy1) &&
+    else if ((equalityKxRx1 || equalityKyRy1) &&
             (kingX != rookX2 && kingY != rookY2)) 1
     else 0
 }
@@ -104,14 +104,14 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           rookX: Int, rookY: Int,
                           bishopX: Int, bishopY: Int): Int {
-    val EqualityKxRx = kingX == rookX
-    val EqualityKxRy = kingY == rookY
-    val EqualityModuliResideKxBxKyBy = Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)
-    return if ((EqualityKxRx || EqualityKxRy) &&
-            (EqualityModuliResideKxBxKyBy)) 3
-    else if ((EqualityModuliResideKxBxKyBy &&
+    val equalityKxRx = kingX == rookX
+    val equalityKxRy = kingY == rookY
+    val equalityModuliResideKxBxKyBy = Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)
+    return if ((equalityKxRx || equalityKxRy) &&
+            (equalityModuliResideKxBxKyBy)) 3
+    else if ((equalityModuliResideKxBxKyBy &&
             (kingX != rookX && kingY != rookY))) 2
-    else if ((EqualityKxRx || EqualityKxRy) &&
+    else if ((equalityKxRx || equalityKxRy) &&
             ((Math.abs(kingX - bishopX) != Math.abs(kingY - bishopY)))) 1
     else 0
 }
@@ -125,12 +125,12 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val SumSqrAB = sqr(a) + sqr(b)
-    val SumSqrBC = sqr(c) + sqr(b)
-    val SumSqrAC = sqr(c) + sqr(a)
+    val sumSqrAB = sqr(a) + sqr(b)
+    val sumSqrBC = sqr(c) + sqr(b)
+    val sumSqrAC = sqr(c) + sqr(a)
     return if (a + b < c || a + c < b || c + b < a) -1
-    else if ((sqr(c) == SumSqrAB) || sqr(a) == SumSqrBC || sqr(b) == SumSqrAC) 1
-    else if (sqr(c) > SumSqrAB || sqr(a) > SumSqrBC || sqr(b) > SumSqrAC) 2
+    else if ((sqr(c) == sumSqrAB) || sqr(a) == sumSqrBC || sqr(b) == sumSqrAC) 1
+    else if (sqr(c) > sumSqrAB || sqr(a) > sumSqrBC || sqr(b) > sumSqrAC) 2
     else 0
 }
 
