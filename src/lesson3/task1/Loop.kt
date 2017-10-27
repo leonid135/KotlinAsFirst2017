@@ -236,7 +236,7 @@ fun squareSequenceDigit(n: Int): Int {
         Length += squStr.length
     }
     i = squStr.length + n - Length - 1
-    return squStr[i].toInt()
+    return squStr[i].toString().toInt()
 }
 
 /**
@@ -258,5 +258,5 @@ fun fibSequenceDigit(n: Int): Int {
         Length += fibStr.length
     }
     i = fibStr.length + n - Length - 1
-    return fibStr[i].toInt()
+    return fibStr[i].toString().toInt()
 }
