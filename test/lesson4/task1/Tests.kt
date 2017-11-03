@@ -77,6 +77,7 @@ class Tests {
     @Test
     @Tag("Easy")
     fun abs() {
+
         assertEquals(0.0, abs(listOf()), 1e-5)
         assertEquals(3.0, abs(listOf(3.0)), 1e-5)
         assertEquals(5.0, abs(listOf(3.0, -4.0)), 1e-5)
