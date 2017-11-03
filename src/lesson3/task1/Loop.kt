@@ -63,11 +63,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-fun digitNumber(n: Int) {
-    val a: String = "n"
-    val size = a.length
-    print(size)
-}
+fun digitNumber(n: Int): Int = if (Math.abs(n) < 10) 1 else digitNumber(n / 10) + 1
+
 
 /**
  * Простая
@@ -94,14 +91,13 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 1
-    for (i in 1..n * m) {
-        var x = i % n
-        var y = i % m
-        k = i
-        if ((x == 0) && (y == 0)) break
-    }
-    return k
+    var M = m
+    var N = n
+    while (M != N)
+        if (M > N) M -= N
+        else N -= M
+    return n / M * m
+
 }
 
 /**
@@ -110,11 +106,10 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var k = 1
-    for (i in 2..n) {
-        k = i
-        if (n % i == 0) break
-    }
+    var k = 2
+
+    while (n % k != 0)
+        k += 1
     return k
 }
 
@@ -124,9 +119,10 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var k = 1
-    for (i in 2..n - 1)
-        if (n % i == 0) k = i
+    var k = n - 1
+
+    while (n % k != 0)
+        k -= 1
     return k
 }
 
@@ -137,16 +133,14 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    for (i in 1..n * m - 1)
-        if ((m % i == 0 && n % i != 0) ||
-                (n % i == 0 && m % i != 0) ||
-                (m % i != 0 && n % i != 0)) {
-            return true
-            break
-        }
-    return false
+fun isCoPrime(m: Int, n: Int): Boolean = nod(m, n) == 1
 
+
+/** функция аходит нод х и у
+ */
+fun nod(x: Int, y: Int): Int {
+    if (y == 0) return x
+    return nod(y, x % y)
 }
 
 /**
@@ -158,14 +152,10 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in 1..n - 1) {
-        var s = i * i
-        if (s in m..n) {
-            return true
-            break
-        }
-    }
+    for (i in m..n)
+        if (Math.sqrt(i.toDouble()) % 1.0 == 0.0) return true
     return false
+
 }
 
 /**
@@ -210,11 +200,15 @@ fun isPalindrome(n: Int): Boolean = TODO()
  * Например, 54 и 323 состоят из разных цифр, а 111 и 0 из одинаковых.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var nStr = n.toString()
-    var fNumb = nStr[0]
-    for (i in nStr)
-        if (fNumb != i) return true
+    var number = n
+    var lastNumber = n % 10
+    number /= 10
+    while (number > 0) {
+        if (lastNumber != number % 10) return true
+        number /= 10
+    }
     return false
+
 }
 
 /**
@@ -226,17 +220,17 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun squareSequenceDigit(n: Int): Int {
     var i = 0
-    var Length = 0
-    var squ = 0
-    var squStr = ""
-    while (Length < n) {
+    var length = 0
+    var sqr = 0
+    var sqrStr = ""
+    while (length < n) {
         i++
-        squ = i * i
-        squStr = squ.toString()
-        Length += squStr.length
+        sqr = i * i
+        sqrStr = sqr.toString()
+        length += sqrStr.length
     }
-    i = squStr.length - (Length - n) - 1
-    return squStr[i].toString().toInt()
+    i = sqrStr.length - (length - n) - 1
+    return sqrStr[i].toString().toInt()
 }
 
 /**
@@ -248,15 +242,15 @@ fun squareSequenceDigit(n: Int): Int {
  */
 fun fibSequenceDigit(n: Int): Int {
     var i = 0
-    var Length = 0
-    var fib = 0
-    var fibStr = ""
-    while (Length < n) {
+    var length = 0
+    var fibonac = 0
+    var fibonacStr = ""
+    while (length < n) {
         i++
-        fib = fib(i)
-        fibStr = fib.toString()
-        Length += fibStr.length
+        fibonac = fib(i)
+        fibonacStr = fibonac.toString()
+        length += fibonacStr.length
     }
-    i = fibStr.length - (Length - n) - 1
-    return fibStr[i].toString().toInt()
+    i = fibonacStr.length - (length - n) - 1
+    return fibonacStr[i].toString().toInt()
 }

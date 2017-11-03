@@ -4,7 +4,10 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
-import lesson4.task1.abs
+import java.lang.Math.*
+import sun.nio.cs.ext.MacThai
+
+
 
 /**
  * Пример
@@ -106,15 +109,17 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
                           bishopX: Int, bishopY: Int): Int {
     val equalityKxRx = kingX == rookX
     val equalityKxRy = kingY == rookY
-    val equalityModuliResideKxBxKyBy = Math.abs(kingX - bishopX) == Math.abs(kingY - bishopY)
+    val equalityModuliResideKxBxKyBy = abs(kingX - bishopX) == abs(kingY - bishopY)
     return if ((equalityKxRx || equalityKxRy) &&
             (equalityModuliResideKxBxKyBy)) 3
     else if ((equalityModuliResideKxBxKyBy &&
             (kingX != rookX && kingY != rookY))) 2
     else if ((equalityKxRx || equalityKxRy) &&
-            ((Math.abs(kingX - bishopX) != Math.abs(kingY - bishopY)))) 1
+            ((abs(kingX - bishopX) != abs(kingY - bishopY)))) 1
     else 0
 }
+
+
 
 /**
  * Простая
@@ -128,9 +133,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val sumSqrAB = sqr(a) + sqr(b)
     val sumSqrBC = sqr(c) + sqr(b)
     val sumSqrAC = sqr(c) + sqr(a)
+    val sqrA = sqr(a)
+    val sqrB = sqr(b)
+    val sqrC = sqr(b)
     return if (a + b < c || a + c < b || c + b < a) -1
-    else if ((sqr(c) == sumSqrAB) || sqr(a) == sumSqrBC || sqr(b) == sumSqrAC) 1
-    else if (sqr(c) > sumSqrAB || sqr(a) > sumSqrBC || sqr(b) > sumSqrAC) 2
+    else if ((sqrC == sumSqrAB) || sqrA == sumSqrBC || sqrB == sumSqrAC) 1
+    else if (sqrC > sumSqrAB || sqrA > sumSqrBC || sqrB > sumSqrAC) 2
     else 0
 }
 
