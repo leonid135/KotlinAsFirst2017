@@ -8,7 +8,6 @@ import java.lang.Math.*
 import sun.nio.cs.ext.MacThai
 
 
-
 /**
  * Пример
  *

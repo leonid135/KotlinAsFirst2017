@@ -125,7 +125,6 @@ fun maxDivisor(n: Int): Int {
         k -= 1
     return k
 }
-
 /**
  * Простая
  *
