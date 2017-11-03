@@ -185,8 +185,6 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
         list[i] = sum
     }
     return list
-
-
 }
 
 /**
@@ -204,6 +202,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  */
 fun factorizeToString(n: Int): String = TODO()
+
 
 /**
  * Средняя

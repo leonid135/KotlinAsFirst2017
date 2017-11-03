@@ -141,7 +141,6 @@ fun nod(x: Int, y: Int): Int {
     if (y == 0) return x
     return nod(y, x % y)
 }
-
 /**
  * Простая
  *

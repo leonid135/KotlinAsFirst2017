@@ -6,8 +6,6 @@ import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import java.lang.Math.*
 import sun.nio.cs.ext.MacThai
-
-
 /**
  * Пример
  *
