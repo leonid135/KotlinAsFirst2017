@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -112,7 +113,7 @@ fun abs(v: List<Double>): Double {
     var a = 0.0
     for (i in v)
         a += sqr(i)
-    return Math.sqrt(a)
+    return sqrt(a)
 
 }
 
@@ -146,7 +147,7 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
 fun times(a: List<Double>, b: List<Double>): Double {
     var sum = 0.0
     val length = b.size
-    for (i in 0..length - 1)
+    for (i in 0 until length)
         sum += a[i] * b[i]
     return sum
 }
@@ -159,12 +160,12 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun polynom(p: List<Double>, x: Double): Double
-{var sum = 0.0
-val length = p.size
-for (i in 0..length - 1)
-sum += p[i] * Math.pow(x, i.toDouble())
-return sum
+fun polynom(p: List<Double>, x: Double): Double {
+    var sum = 0.0
+    val length = p.size
+    for (i in 0 until length)
+        sum += p[i] * Math.pow(x, i.toDouble())
+    return sum
 }
 
 /**
@@ -180,7 +181,7 @@ return sum
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     var sum = 0.0
     val length = list.size
-    for (i in 0..length - 1) {
+    for (i in 0 until length) {
         sum += list[i]
         list[i] = sum
     }
@@ -195,6 +196,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  * Множители в списке должны располагаться по возрастанию.
  */
 fun factorize(n: Int): List<Int> = TODO()
+
 /**
  * Сложная
  *
@@ -260,4 +262,54 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val units = listOf(" ", "один", "два", "три",
+            "четыре", "пять", "шесть", "семь", "восемь", "девять")
+
+    val thousands = listOf(" ", "одна", "две", "три",
+            "четыре", "пять", "шесть", "семь", "восемь", "девять")
+
+    val hundreds = listOf(" ", "сто", "двести", "триста",
+            "четыреста", "пятьсот", "шестьсот", "семьсот",
+            "восемьсот", "девятьсот")
+
+    val tenNineteen = listOf("десять", "одиннадцать", "двенадцать",
+            "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+            "семнадцать", "восемнадцать", "девятнадцать")
+
+    val decade = listOf(" ", "десять", "двадцать", "тридцать",
+            "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+            "восемьдесят", "девяносто")
+
+    val ending = listOf("тысяч", "тысячи", "тысяча", "тысяч")
+    val site = mutableListOf<Int>()
+    var transposit = mutableListOf<String>()
+    val firstP = n / 1000
+    val secondP = n - firstP * 1000
+    site.add(0, firstP)
+    site.add(1, secondP)
+    for (i in 0..1) {
+        var int1 = site[i] % 10
+        var int10 = site[i] % 100
+        var int100 = site[i] / 100
+        if (int100 > 0) transposit.add(hundreds[int100])
+        if (int10 in 10..19) transposit.add(tenNineteen[int1])
+        else {
+            transposit.add(decade[int10 / 10])
+            if (i == 0) transposit.add(thousands[int1])
+            else transposit.add(units[int1])
+        }
+        if (i == 0 && n > 999) {
+            when {
+                int10 in 11..19 -> transposit.add(ending[0])
+                int1 in 2..4 -> transposit.add(ending[1])
+                int1 == 1 -> transposit.add(ending[2])
+                else -> transposit.add(ending[3])
+            }
+        }
+    }
+    return transposit.filter { it != " " }.joinToString(separator = " ")
+}
+
+
+

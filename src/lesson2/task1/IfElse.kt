@@ -132,7 +132,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val sumSqrAC = sqr(c) + sqr(a)
     val sqrA = sqr(a)
     val sqrB = sqr(b)
-    val sqrC = sqr(b)
+    val sqrC = sqr(c)
     return if (a + b < c || a + c < b || c + b < a) -1
     else if ((sqrC == sumSqrAB) || sqrA == sumSqrBC || sqrB == sumSqrAC) 1
     else if (sqrC > sumSqrAB || sqrA > sumSqrBC || sqrB > sumSqrAC) 2
