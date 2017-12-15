@@ -2,7 +2,9 @@
 
 package lesson3.task1
 
+import jdk.nashorn.internal.runtime.JSType.toDouble
 import lesson1.task1.sqr
+import java.lang.Math.*
 
 /**
  * Пример
@@ -63,7 +65,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Найти количество цифр в заданном числе n.
  * Например, число 1 содержит 1 цифру, 456 -- 3 цифры, 65536 -- 5 цифр.
  */
-fun digitNumber(n: Int): Int = if (Math.abs(n) < 10) 1 else digitNumber(n / 10) + 1
+fun digitNumber(n: Int): Int = if (abs(n) < 10) 1 else digitNumber(n / 10) + 1
 
 
 /**
@@ -106,10 +108,12 @@ fun lcm(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-   for (i in 2 .. Math.sqrt(n.toDouble()).toInt())
-       if (n%i==0) return i
+    for (i in 2..ceil(n.toDouble()).toInt())
+        if (n % i == 0) return i
     return n
 }
+
+
 
 /**
  * Простая
@@ -118,13 +122,12 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var m = n
-    for ( i in n downTo 2 ) {
-        if (n % i == 0 && n > i ) break
+    for (i in n downTo 2) {
+        if (n % i == 0 && n > i) break
         m--
     }
     return m
 }
-
 
 /**
  * Простая
@@ -133,14 +136,14 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = nod(m, n) == 1
+fun isCoPrime(m: Int, n: Int): Boolean = greatestCommonDivisor(m, n) == 1
 
 
 /** функция аходит нод х и у
  */
-fun nod(x: Int, y: Int): Int {
+fun greatestCommonDivisor(x: Int, y: Int): Int {
     if (y == 0) return x
-    return nod(y, x % y)
+    return greatestCommonDivisor(y, x % y)
 }
 
 /**
@@ -153,7 +156,7 @@ fun nod(x: Int, y: Int): Int {
 
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (i in m..n)
-        if (Math.sqrt(i.toDouble()) % 1.0 == 0.0) return true
+        if (sqrt(i.toDouble()) % 1.0 == 0.0) return true
     return false
 
 }
