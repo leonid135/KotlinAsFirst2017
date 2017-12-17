@@ -1,6 +1,8 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson7.task2
 
+import lesson7.task1.Cell
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
 
@@ -59,7 +61,31 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    var value = 1
+    val result = createMatrix(height, width, 0)
+    var k = 0
+    while (value <= height * width) {
+        k++
+        for (j in k - 1 until width - k + 1) {
+            if (value > height * width) break
+            result[Cell(k - 1, j)] = value++
+        }
+        for (j in k until height - k + 1) {
+            if (value > height * width) break
+            result[Cell(j, width - k)] = value++
+        }
+        for (j in width - k - 1 downTo k - 1) {
+            if (value > height * width) break
+            result[Cell(height - k, j)] = value++
+        }
+        for (j in height - k - 1 downTo k) {
+            if (value > height * width) break
+            result[Cell(j, k - 1)] = value++
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -75,7 +101,35 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    var value = 1
+    val result = createMatrix(height, width, 0)
+    var k = 0
+    while (value <= height * width) {
+        k++
+        for (j in k - 1 until width - k + 1) {
+            if (value > height * width) break
+            result[Cell(k - 1, j)] = k
+            value++
+        }
+        for (j in k until height - k + 1) {
+            if (value > height * width) break
+            result[Cell(j, width - k)] = k
+            value++
+        }
+        for (j in width - k - 1 downTo k - 1) {
+            if (value > height * width) break
+            result[Cell(height - k, j)] = k
+            value++
+        }
+        for (j in height - k - 1 downTo k) {
+            if (value > height * width) break
+            result[Cell(j, k - 1)] = k
+            value++
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -103,7 +157,16 @@ fun generateSnake(height: Int, width: Int): Matrix<Int> = TODO()
  * 4 5 6      8 5 2
  * 7 8 9      9 6 3
  */
-fun <E> rotate(matrix: Matrix<E>): Matrix<E> = TODO()
+fun <E> rotate(matrix: Matrix<E>): Matrix<E> {
+    if (matrix.height != matrix.width) throw IllegalArgumentException()
+    val result = createMatrix(matrix.height, matrix.width, matrix[0, 0])
+    for (i in 0 until matrix.width) {
+        for (j in 0 until matrix.width) {
+            result[Cell(j, matrix.width - i - 1)] = matrix[Cell(i, j)]
+        }
+    }
+    return result
+}
 
 /**
  * Сложная
