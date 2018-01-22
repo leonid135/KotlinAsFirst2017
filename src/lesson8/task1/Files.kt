@@ -159,7 +159,7 @@ fun centerFile(inputName: String, outputName: String) {
  */
 
 
-fun maxL (inputName: String):Int {
+fun maxL(inputName: String): Int {
     var max = -1
     for (line in File(inputName).readLines()) {
         if (line.trim().length > max) max = line.trim().length
@@ -168,39 +168,35 @@ fun maxL (inputName: String):Int {
 }
 
 
-
 fun alignFileByWidth(inputName: String, outputName: String) {
-    val maxL = maxL(inputName)
     val writer = File(outputName).bufferedWriter()
+    var maxL = maxL(inputName)
     for (line in File(inputName).readLines()) {
-        if (line.isEmpty()) writer.newLine()
-        else {
-            val resLine = StringBuilder()
-            if (line.length < maxL) {
-                var char = 0
-                val wordCurLine = line.trim().split(Regex("\\s+"))
-                for (word in wordCurLine) {
-                    char += word.length
-                }
-                for (word in wordCurLine) {
-                    resLine.append(word)
-                    if (wordCurLine.size != 1 && word != wordCurLine.last()) {
-                        val space = floor((maxL - char) / (wordCurLine.size - 1.0))
-                        for (i in 0..space.toInt())
-                            resLine.append(" ")
-                    }
-                }
-            }
-            else resLine.append(line.trim())
-            writer.write(resLine.toString())
-            if (line != File(inputName).readLines().last())
-                writer.newLine()
+        if (line.isEmpty()) {
+            writer.newLine()
+            continue
         }
+        val wordsCurLine = line.trim().split(" ").toMutableList()
+        var d = maxL - line.trim().length
+        if (wordsCurLine.size == 1) {
+            writer.write(line.trim())
+            writer.newLine()
+            continue
+        }
+        while (d != 0) {
+            for (i in 0 until wordsCurLine.size) {
+                if (i != wordsCurLine.lastIndex) {
+                    wordsCurLine[i] += " "
+                    d--
+                }
+                if (d == 0) break
+            }
+        }
+        writer.write(wordsCurLine.joinToString(separator = " "))
+        writer.newLine()
     }
     writer.close()
 }
-
-
 
 /**
  * Средняя
