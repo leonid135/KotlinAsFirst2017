@@ -170,12 +170,11 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
         bishopMove == 2 -> {
             var pozit1 = (((start.row - start.column) + (end.column + end.row)) / 2)
             var pozit2 = ((((start.row - start.column) + (end.column + end.row)) / 2) - (start.row - start.column))
-            if (!Square(pozit1, pozit2).inside()){
+            if (!Square(pozit1, pozit2).inside()) {
                 pozit1 = (((start.row + start.column) + (end.row - end.column)) / 2)
                 pozit2 = ((((start.row + start.column) + (end.row - end.column)) / 2) - (end.row - end.column))
                 pointsMutList.add(Square(pozit2, pozit1))
-            }
-            else pointsMutList.add(Square(pozit2, pozit1))
+            } else pointsMutList.add(Square(pozit2, pozit1))
             pointsMutList.add(Square(end.column, end.row))
         }
         bishopMove == 1 -> {
@@ -206,7 +205,24 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    var count = 0
+    var columnGo = start.column
+    var rowGo = start.row
+    while (end.column != columnGo || rowGo != end.row) {
+        if (end.row > rowGo)
+            rowGo++
+        else if (rowGo > end.row)
+            rowGo--
+        if (columnGo < end.column)
+            columnGo++
+        else if (end.column < columnGo)
+            columnGo--
+        count++
+    }
+    return count
+}
 
 /**
  * Сложная
@@ -222,7 +238,27 @@ fun kingMoveNumber(start: Square, end: Square): Int = TODO()
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    when (kingMoveNumber(start, end)) {
+        0 -> return listOf(start)
+        1 -> return listOf(start, end)
+    }
+    var rowGo = start.row
+    val trajectory = mutableListOf(Square(start.column, start.row))
+    var columnGo = start.column
+    while (rowGo != end.row || columnGo != end.column) {
+        if (end.row > rowGo)
+            rowGo++
+        else if (end.row < rowGo)
+            rowGo--
+        if (end.column > columnGo)
+            columnGo++
+        else if (columnGo > end.column)
+            columnGo--
+        trajectory.add(Square(columnGo, rowGo))
+    }
+    return trajectory
+}
 
 /**
  * Сложная
